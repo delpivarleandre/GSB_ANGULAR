@@ -1,0 +1,88 @@
+<form [formGroup]="formValueCR" (ngSubmit)="getvalue()">
+    <div class="jumbotron">
+        <fieldset>
+            <legend>Eléments forfaitisés</legend>
+            <p>
+                <!-- {% for frais in lesFrais %} -->
+                <span *ngFor="let t of ligneFraisForfait | keyvalue">
+                    <label>{{t.value.libelle}}</label>
+                    <input type="number" min="0" class="form-control" required name="t.value.idfrais"
+                        value="{{t.value.quantite}}" formControlName="{{t.value.idfrais}}">
+                </span>
+                <input type="hidden" name="mois" value="">
+            </p>
+        </fieldset>
+        <p>
+            <input id="ajouter" type="submit" class="btn btn-outline-primary" value="Ajouter" />
+            <input id="effacer" type="reset" class="btn btn-outline-danger" value="Effacer" />
+        </p>
+    </div>
+</form>
+
+
+<table class="table table-striped">
+
+        <tr>
+            <th class="date">Date</th>
+            <th class="libelle">Libellé</th>
+            <th class="montant">Montant</th>
+            <th class="montant">Mode de paiement</th>
+            <th class="action">&nbsp;</th>
+        </tr>
+
+
+
+        <tr *ngFor="let i of ligneFraisHorsForfait">
+            <td>{{i.date}}</td>
+            <td>{{i.libelle}}</td>
+            <td>{{i.montant}}</td>
+            <td>{{i.modePaiement}}</td>
+            <td></td>
+
+            <td>
+                <button class="btn btn-danger btn-sm " (click)="delete(i)">Supprimer</button>
+            </td>
+        </tr>
+
+</table>
+<form [formGroup]="formGroupHorsForfait" (ngSubmit)="getHorsForfaitAdd()">
+    <div class="jumbotron">
+
+        <fieldset>
+            <legend>Nouvel élément hors forfait
+            </legend>
+            <p>
+                <label for="txtDateHF">Date (jj/mm/aaaa):</label>
+                <input type="date" id="txtDateHF" class="form-control" name="dateFrais" formControlName="date" required />
+            </p>
+
+            <p>
+                <label for="txtLibelleHF">Libellé</label>
+                <input type="text" id="txtLibelleHF" class="form-control" name="libelle" formControlName="libelle" required />
+            </p>
+            <p>
+                <label for="txtMontantHF">Montant :</label>
+                <input type="number" step=".001" id="txtMontantHF" class="form-control" formControlName="montant" name="montant" required />
+            </p>
+            <p>
+
+                <label for="txtModePaiementHF">Mode de paiement :</label>
+                <select class="browser-default custom-select" name="paiement" formControlName="modePaiement">
+                    <option *ngFor="let r of modePaiementOptions" [value]="r.id">{{ r.modePaiement }}</option>;
+                </select>
+            </p>
+        </fieldset>
+        <!-- <mat-form-field class="example-full-width">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+        <p>
+            <input id="ajouter" type="submit" class="btn btn-outline-primary" value="Ajouter" size="20" />
+            <input id="effacer" type="reset" class="btn btn-outline-danger" value="Effacer" size="20" />
+        </p>
+    </div>
+</form>

@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="jumbotron mt-5">
+      <div class="col-sm-8 mx-auto">
+        <h1 class="text-center">PROFIL</h1>
+      </div>
+      <table class="table col-md-6 mx-auto">
+        <tr>
+          <td>ID</td>
+          <td>{{ auth.getUserDetails()?.identity.id }}</td>
+        </tr>
+        <tr>
+          <td>NOM</td>
+          <td>{{ auth.getUserDetails()?.identity.nom }}</td>
+        </tr>
+        <tr>
+        <tr>
+          <td>PRENOM</td>
+          <td>{{ auth.getUserDetails()?.identity.prenom }}</td>
+        </tr>
+        <tr>
+        <tr>
+          <td>DATE</td>
+          <td>{{ auth.getUserDetails()?.identity.dateEmbauche}}</td>
+        </tr>
+        <tr>
+        <tr>
+          <td>CODE POSTAL</td>
+          <td>{{ auth.getUserDetails()?.identity.cp }}</td>
+        </tr>
+        <tr>
+          <td>DAF</td>
+          <span *ngIf="auth.getUserDetails()?.identity.daf == 1">
+          <td>VOUS ETES DAF</td>
+          </span>
+          <span *ngIf="auth.getUserDetails()?.identity.daf == 0">
+          <td>VOUS N'ETES PAS DAF, SIMPLE VISITEUR</td>
+          </span>
+        </tr>
+      </table>
+    </div>
+  </div>

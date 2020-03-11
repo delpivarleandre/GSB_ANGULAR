@@ -1,0 +1,71 @@
+<h1>Consultation de vos fiches de frais</h1>
+<br />
+
+<fieldset>
+    <legend>Quel fiche souhaitez-vous consulter ?</legend>
+    
+    <div class="divRecherche">
+        <form [formGroup]="formGroupDate" (ngSubmit)="sendMoisValeur()">
+            <mat-form-field>
+                <mat-label>Fiche de frais du mois :</mat-label>
+                <mat-select formControlName="mois" required>
+                    <mat-option *ngFor="let type of moisVisiteur" value="{{type.mois}}">
+                        {{type.mois}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+                <input id="ajouter" type="submit" class="btn btn-outline-primary btn-sm margLeft" value="Valider" />
+        </form>
+    </div>
+</fieldset>
+<br>
+<div>
+<span *ngIf="itsTrue">
+    <h2>Frais forait</h2>
+    <legend>Eléments forfaitisés</legend>
+    <table class="table table-striped">
+        
+        <tr>
+            <th class="libelle">Libellé</th>
+            <th class="montant">Montant</th>
+            <th class="quantite">quantite</th>
+            <th class="total">total</th>
+        </tr>
+        
+        
+        
+        <tr *ngFor="let i of ligneFraisForfaitComplet">
+            <td>{{i.libelle}}</td>
+            <td>{{i.montant}}</td>
+            <td>{{i.quantite}}</td>
+            <td>{{i.total}}</td>
+        </tr>
+        
+    </table>
+    
+    
+    <h2>Frais hors forait</h2>
+    <legend>Eléments non forfaitisés</legend>
+    <table class="table table-striped">
+        
+        <tr>
+            <th class="date">Date</th>
+            <th class="libelle">Libellé</th>
+            <th class="montant">Montant</th>
+            <th class="montant">Mode de paiement</th>
+        </tr>
+
+
+
+        <tr *ngFor="let i of ligneFraisHorsForfait">
+            <td>{{i.date}}</td>
+            <td>{{i.libelle}}</td>
+            <td>{{i.montant}}</td>
+            <td>{{i.modePaiement}}</td>
+            
+        </tr>
+
+</table>
+</span>
+</div>
