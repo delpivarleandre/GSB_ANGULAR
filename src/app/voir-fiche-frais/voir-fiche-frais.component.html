@@ -3,7 +3,7 @@
 
 <fieldset>
     <legend>Quel fiche souhaitez-vous consulter ?</legend>
-    
+
     <div class="divRecherche">
         <form [formGroup]="formGroupDate" (ngSubmit)="sendMoisValeur()">
             <mat-form-field>
@@ -15,57 +15,112 @@
                 </mat-select>
             </mat-form-field>
             <br>
-                <input id="ajouter" type="submit" class="btn btn-outline-primary btn-sm margLeft" value="Valider" />
+            <button mat-stroked-button type="submit" color="primary" id="ajouter">Valider</button>
         </form>
     </div>
 </fieldset>
 <br>
 <div>
-<span *ngIf="itsTrue">
-    <h2>Frais forait</h2>
-    <legend>Eléments forfaitisés</legend>
-    <table class="table table-striped">
-        
-        <tr>
-            <th class="libelle">Libellé</th>
-            <th class="montant">Montant</th>
-            <th class="quantite">quantite</th>
-            <th class="total">total</th>
-        </tr>
-        
-        
-        
-        <tr *ngFor="let i of ligneFraisForfaitComplet">
-            <td>{{i.libelle}}</td>
-            <td>{{i.montant}}</td>
-            <td>{{i.quantite}}</td>
-            <td>{{i.total}}</td>
-        </tr>
-        
-    </table>
-    
-    
-    <h2>Frais hors forait</h2>
-    <legend>Eléments non forfaitisés</legend>
-    <table class="table table-striped">
-        
-        <tr>
-            <th class="date">Date</th>
-            <th class="libelle">Libellé</th>
-            <th class="montant">Montant</th>
-            <th class="montant">Mode de paiement</th>
-        </tr>
+    <span *ngIf="itsTrue">
+
+        <h2>Frais forait</h2>
+        <legend>Eléments forfaitisés</legend>
+
+        <table mat-table [dataSource]="ligneFraisForfaitComplet">
+            <!-- Item Column -->
+            <ng-container matColumnDef="LIBELLE">
+                <th mat-header-cell *matHeaderCellDef><strong>Libellé</strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.libelle}} </td>
+                <td mat-footer-cell *matFooterCellDef> Accumulation </td>
+            </ng-container>
+
+            <ng-container matColumnDef="MONTANT">
+                <th mat-header-cell *matHeaderCellDef><strong>Montant</strong>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.montant}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
 
 
+            <!-- Cost Column -->
+            <ng-container matColumnDef="QUANTITE">
+                <th mat-header-cell *matHeaderCellDef><strong>Quantite</strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.quantite }} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
 
-        <tr *ngFor="let i of ligneFraisHorsForfait">
-            <td>{{i.date}}</td>
-            <td>{{i.libelle}}</td>
-            <td>{{i.montant}}</td>
-            <td>{{i.modePaiement}}</td>
-            
-        </tr>
 
-</table>
-</span>
+            <ng-container matColumnDef="TOTAL" class="right">
+                <th mat-header-cell *matHeaderCellDef class="right"><strong>Total</strong>
+                </th>
+                <td mat-cell *matCellDef="let element;" class="right">
+                    {{element.total}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef class="right"> {{getTotalCostFrais() }} </td>
+            </ng-container>
+            <!-- Disclaimer column -->
+
+
+            <!-- The table will render two header rows, one data row per data object, and two footer rows. -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="example-first-header-row">
+            </tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+            <tr mat-footer-row class="example-second-footer-row"></tr>
+        </table>
+        <br>
+        <br>
+        <h2>Frais hors forait</h2>
+        <legend>Eléments non forfaitisés</legend>
+
+
+        <table mat-table [dataSource]="ligneFraisHorsForfait">
+            <!-- Item Column -->
+            <ng-container matColumnDef="DATE">
+                <th mat-header-cell *matHeaderCellDef><strong>Date</strong> </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+
+            <ng-container matColumnDef="LIBELLE">
+                <th mat-header-cell *matHeaderCellDef><strong>Libellé</strong>
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.libelle}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+
+
+            <!-- Cost Column -->
+            <ng-container matColumnDef="MONTANT" class="right">
+                <th mat-header-cell *matHeaderCellDef class="right"><strong>Montant</strong> </th>
+                <td mat-cell *matCellDef="let element" class="right"> {{element.montant }} </td>
+                <td mat-footer-cell *matFooterCellDef class="right"> {{getTotalCost() }} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="MODEPAIEMENT">
+                <th mat-header-cell *matHeaderCellDef><strong>Mode de paiement</strong>
+                </th>
+                <td mat-cell *matCellDef="let element;">
+                    {{element.modePaiement}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+            </ng-container>
+            <!-- Disclaimer column -->
+
+
+            <!-- The table will render two header rows, one data row per data object, and two footer rows. -->
+            <tr mat-header-row *matHeaderRowDef="displayed" class="example-first-header-row">
+            </tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayed;"></tr>
+
+            <tr mat-footer-row *matFooterRowDef="displayed" class="example-first-footer-row"></tr>
+            <tr mat-footer-row class="example-second-footer-row"></tr>
+        </table>
+        <br>
+        <br>
+    </span>
 </div>

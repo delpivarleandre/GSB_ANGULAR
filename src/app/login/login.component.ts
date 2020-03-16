@@ -2,11 +2,16 @@ import { Component } from '@angular/core'
 import { AuthenticationService } from '../services/authentication.service'
 import { TokenPayload } from '../interface/tokenPayload-interface';
 import { Router } from '@angular/router'
+import { Validators, FormControl } from '@angular/forms';
 
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  emailFormControl = new FormControl('', [
+    Validators.required,
+  ]);
   credentials: TokenPayload = {
     id : '',
     nom : '',

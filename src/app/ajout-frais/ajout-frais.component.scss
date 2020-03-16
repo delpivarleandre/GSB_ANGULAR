@@ -2,3 +2,34 @@
     display:flex;
     margin: 20px 0 10px 0;
 }
+
+.example-form {
+    min-width: 500px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+  .jumbotron {
+    min-width: 1100px;
+}
+
+table {
+  width: 100%;
+}
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+  padding-right: 24px;
+  text-align: right;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  color: black;
+}
+.pad {
+  padding: 4px;
+}
+

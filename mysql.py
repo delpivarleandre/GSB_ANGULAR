@@ -211,14 +211,16 @@ def update_frais_forfait():
 def add_frais_hors_forfait():
     data = request.get_json()
     ligne_frais_hors_forfait = data['fraisHorsForfait']
+    date_recup = ligne_frais_hors_forfait['date']
+    
+    print(date_recup[:-14])
+    # for i in ligne_frais_hors_forfait : 
+    #     print(i['date'])
     id_visiteur = data['idVisiteur']
-    print(data)
-    print(ligne_frais_hors_forfait)
-    print(id_visiteur)
     cnxn = get_mydb()
     cur = cnxn.cursor()
     cur.execute("""INSERT INTO LigneFraisHorsForfait (idVisiteur,mois,libelle,date,montant,paiement)
-                                       VALUES('{id_visiteur}', '{mois}', '{libelle}', '{date_now}', '{montant}', '{paiement}')""".format(date_now=ligne_frais_hors_forfait['date'], montant=ligne_frais_hors_forfait['montant'], id_visiteur=id_visiteur, mois=currentMonth, libelle=ligne_frais_hors_forfait['libelle'], paiement=ligne_frais_hors_forfait['modePaiement']))
+                                       VALUES('{id_visiteur}', '{mois}', '{libelle}', '{date_now}', '{montant}', '{paiement}')""".format(date_now=date_recup[:-13], montant=ligne_frais_hors_forfait['montant'], id_visiteur=id_visiteur, mois=currentMonth, libelle=ligne_frais_hors_forfait['libelle'], paiement=ligne_frais_hors_forfait['modePaiement']))
     cnxn.commit()
     return jsonify(1)
 

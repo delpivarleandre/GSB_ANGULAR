@@ -1,34 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceService } from '../services/service'
 import { ModePaiement } from '../interface/modePaiement-interface';
 import { FraisForfait } from '../interface/fraisForfait-interface';
 import { AuthenticationService } from '../services/authentication.service';
 import { LigneFraisForfait } from '../interface/ligneFraisForfait-interace';
 import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { FraisHorsForfait } from '../interface/fraisHorsForfait-interface';
+import { MatSort,  MatDateFormats, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from "@angular/material-moment-adapter";
+import * as _moment from 'moment';
 
+export const MY_FORMAT: MatDateFormats = {
+  parse: {
+    dateInput: "DD/MM/YYYY"
+  },
+  display: {
+    dateInput: "DD/MM/YYYY",
+    monthYearLabel: "YYYY",
+    dateA11yLabel: "LL",
+    monthYearA11yLabel: "YYYY"
+  }
+};
+
+const moment = _moment;
 @Component({
   selector: 'app-ajout-frais',
   templateUrl: './ajout-frais.component.html',
-  styleUrls: ['./ajout-frais.component.scss']
+  styleUrls: ['./ajout-frais.component.scss'],
+  providers : [{ provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+
+  {
+    provide: DateAdapter,
+    useClass: MomentDateAdapter,
+    deps: [MAT_DATE_LOCALE]
+  },
+
+  { provide: MAT_DATE_FORMATS, useValue: MY_FORMAT }
+],
 })
+
+
 export class AjoutFraisComponent implements OnInit {
 
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private service: ServiceService,
     public auth: AuthenticationService,
     private fb: FormBuilder,
   ) { }
 
+
+
+
+  displayedColumns = [
+    'DATE',
+    'LIBELLE',
+    'MONTANT',
+    'MODEPAIEMENT',
+    'BUTTON'
+  ];
   formValueCR: FormGroup
   formGroupHorsForfait: FormGroup
-
 
 
   modePaiementOptions: ModePaiement[]
   ligneFraisForfait: LigneFraisForfait[]
   ligneFraisHorsForfait: FraisHorsForfait[]
+
 
   ngOnInit() {
 
@@ -40,12 +78,12 @@ export class AjoutFraisComponent implements OnInit {
     });
 
     this.formGroupHorsForfait = this.fb.group({
-      date : new FormControl,
-      libelle : new FormControl,
-      montant : new FormControl,
-      modePaiement : new FormControl
+      date: new FormControl,
+      libelle: new FormControl,
+      montant: new FormControl,
+      modePaiement: new FormControl
     })
-
+    // console.log('datasource',this.dataSource)
     this.modePaiementOptions = this.service.modePaiement.filter(r => r);
     this.getLigneFraisForfait()
     this.getLigneFraisHorsForfait()
@@ -74,7 +112,7 @@ export class AjoutFraisComponent implements OnInit {
 
   getHorsForfaitAdd() {
     console.log(this.formGroupHorsForfait.value)
-    this.service.addLigneFraisHorsForfait(this.formGroupHorsForfait.value,this.auth.getIdLogin()).subscribe(()=> this.getLigneFraisHorsForfait())
+    this.service.addLigneFraisHorsForfait(this.formGroupHorsForfait.value, this.auth.getIdLogin()).subscribe(() => this.getLigneFraisHorsForfait())
   }
   delete(task: FraisHorsForfait): void {
     this.service

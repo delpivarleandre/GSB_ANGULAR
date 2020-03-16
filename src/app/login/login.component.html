@@ -1,18 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 mt-5 mx-auto">
-      <form (submit)="login()">
-        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-        <div class="form-group">
-          <label for="email">Nom d'utilisateur</label>
-          <input type="email" class="form-control" name="email" placeholder="Enter email" [(ngModel)]="credentials.email">
-        </div>
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="credentials.password">
-        </div>
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Se connecter</button>
-      </form>
-    </div>
+        <form (submit)="login()" (keyup.enter)="login()">
+          <div class="c">
+            <h1>Connexion</h1>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label for="email">Nom d'utilisateur</mat-label>
+                <input matInput name="email" [formControl]="emailFormControl" placeholder="Entrez le nom d'utilisateur"
+                  [(ngModel)]="credentials.email" required>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                  Nom d'utilisateur <strong>requis</strong>
+                </mat-error>
+                <br>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label for="password">Mot de passe</mat-label>
+                <input matInput type="password" name="password" placeholder="Mot de passe"
+                  [(ngModel)]="credentials.password" required>
+              </mat-form-field>
+            </form>
+            <button mat-raised-button (keyup.enter)="login()" type="submit" color="primary">Se
+              connecter</button>
+          </div>
+        </form>
+      </div>
   </div>
 </div>
