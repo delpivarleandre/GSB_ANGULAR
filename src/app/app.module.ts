@@ -48,13 +48,15 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { VoirFicheFraisComponent } from './voir-fiche-frais/voir-fiche-frais.component';
+import { ModeDePaiementComponent } from './mode-de-paiement/mode-de-paiement.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   // { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'ajout-frais', component: AjoutFraisComponent },
-  { path: 'voir-fiche-frais', component: VoirFicheFraisComponent },
+  { path: 'ajout_frais', component: AjoutFraisComponent },
+  { path: 'voir_fiche_frais', component: VoirFicheFraisComponent },
+  { path: 'mode_de_paiement', component: ModeDePaiementComponent },
 
   {
     path: 'profile',
@@ -71,7 +73,8 @@ const routes: Routes = [
     RegisterComponent,
     HomeComponent,
     AjoutFraisComponent,
-    VoirFicheFraisComponent
+    VoirFicheFraisComponent,
+    ModeDePaiementComponent
   ],
   imports: [
     ReactiveFormsModule,

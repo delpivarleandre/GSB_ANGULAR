@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding: 10px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  color: black;
+
+}
+
+b,
+strong {
+  font-weight: bolder;
+  font-size: 15px;
+}
+
+.mat-success {
+    background-color: green;
+    color: #fff;
+    width: 97px;
+}
+
+.example-full-width {
+  width: 100%;
+}

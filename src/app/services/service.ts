@@ -66,7 +66,7 @@ export class ServiceService {
     return req;
   }
 
-  getLigneFraisForfaitComplet(idVisiteur,mois): Observable<FraisForfaitComplet[]> {
+  getLigneFraisForfaitComplet(idVisiteur, mois): Observable<FraisForfaitComplet[]> {
     const req = this.http.get<FraisForfaitComplet[]>(this.adress + 'users/ligne_frais_forfait_complet?num=' + idVisiteur + '&mois=' + mois).pipe(share());
     req.subscribe((res => {
       res.forEach((item) => {
@@ -74,8 +74,8 @@ export class ServiceService {
           id: item.id,
           libelle: item.libelle,
           quantite: item.quantite,
-          montant : item.montant,
-          total : item.total
+          montant: item.montant,
+          total: item.total
         }
       })
     }));
@@ -102,6 +102,13 @@ export class ServiceService {
     }
     return this.http.put<LigneFraisForfait>(this.adress + 'users/update_frais_forfait', body);
   }
+  updatePaiement(modePaiement: ModePaiement): Observable<{}> {
+    console.log(JSON.stringify(modePaiement));
+    const body = {
+      modePaiement
+    }
+    return this.http.put<LigneFraisForfait>(this.adress + 'users/update_mode_paiement', body);
+  }
 
   getLigneFraisHorsForfait(idVisiteur): Observable<FraisHorsForfait[]> {
     const req = this.http.get<FraisHorsForfait[]>(this.adress + 'users/ligne_frais_hors_forfait?num=' + idVisiteur).pipe(share());
@@ -109,30 +116,45 @@ export class ServiceService {
       res.forEach((item) => {
         this.ligneFraisHorsForfait[item.id] = {
           date: item.date,
-          id : item.id,
-          libelle : item.libelle,
-          modePaiement : item.modePaiement,
-          montant : item.montant,
-          paiement : item.paiement,
+          id: item.id,
+          libelle: item.libelle,
+          modePaiement: item.modePaiement,
+          montant: item.montant,
+          paiement: item.paiement,
         }
       })
       console.log(res)
     }
-    
+
     ));
     return req;
   }
+
   deleteFraisHorsForfait(id: number): Observable<{}> {
     const url = this.adress + `users/delete_hors_forfait/${id}`;
     return this.http.delete(url);
-}
-
-addLigneFraisHorsForfait(fraisHorsForfait: FraisHorsForfait, idVisiteur): Observable<{}> {
-  console.log(JSON.stringify(fraisHorsForfait));
-  const body = {
-    fraisHorsForfait,
-    idVisiteur
   }
-  return this.http.post<LigneFraisForfait>(this.adress + 'users/add_frais_hors_forfait', body);
-}
+
+  deleteModePaiement(id: number): Observable<{}> {
+    const url = this.adress + `users/delete_mode_paiement/${id}`;
+    return this.http.delete(url);
+  }
+
+  addLigneFraisHorsForfait(fraisHorsForfait: FraisHorsForfait, idVisiteur): Observable<{}> {
+    console.log(JSON.stringify(fraisHorsForfait));
+    const body = {
+      fraisHorsForfait,
+      idVisiteur
+    }
+    return this.http.post<LigneFraisForfait>(this.adress + 'users/add_frais_hors_forfait', body);
+  }
+
+  addModePaiement(modePaiement: ModePaiement): Observable<{}> {
+    console.log(JSON.stringify(modePaiement));
+    const body = {
+      modePaiement
+    }
+    return this.http.post<LigneFraisForfait>(this.adress + 'users/add_mode_paiement', body);
+  }
+  
 }

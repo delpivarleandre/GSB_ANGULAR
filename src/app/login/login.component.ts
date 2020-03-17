@@ -12,6 +12,9 @@ export class LoginComponent {
   emailFormControl = new FormControl('', [
     Validators.required,
   ]);
+  passFormControl = new FormControl('', [
+    Validators.required,
+  ]);
   credentials: TokenPayload = {
     id : '',
     nom : '',

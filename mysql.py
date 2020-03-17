@@ -206,6 +206,19 @@ def update_frais_forfait():
     cnxn.commit()
     return jsonify(1)
 
+@app.route('/users/update_mode_paiement', methods=['PUT'])
+def update_mode_paiement():
+    data = request.get_json()
+    mode_paiement = data['modePaiement']
+    id_mode_paiement = mode_paiement['id']
+    libelle_mode_paiment = mode_paiement['modePaiement']
+    cnxn = get_mydb()
+    cur = cnxn.cursor()
+    cur.execute("""update ModePaiement set modePaiement = '{libelle_mode_paiment}'
+			where id = '{id}'""".format(libelle_mode_paiment=libelle_mode_paiment.encode('utf-8'),id=id_mode_paiement))
+    cnxn.commit()
+    return jsonify(1)
+
 
 @app.route('/users/add_frais_hors_forfait', methods=['POST'])
 def add_frais_hors_forfait():
@@ -311,6 +324,33 @@ def delete_hors_forfait(id):
     mycursor.close()
     cnxn.close()
     return jsonify(result)
+
+@app.route('/users/delete_mode_paiement/<id>', methods=['DELETE'])
+def delete_mode_paiement(id):
+    print(id)
+    cnxn = get_mydb()
+    mycursor = cnxn.cursor()
+    mycursor.execute("DELETE FROM ModePaiement WHERE id =" + id)
+    cnxn.commit()
+    if mycursor.rowcount > 0:
+        result = {'message': 'record delete'}
+    else:
+        result = {'message': 'not found'}
+    mycursor.close()
+    cnxn.close()
+    return jsonify(result)
+
+@app.route('/users/add_mode_paiement', methods=['POST'])
+def add_mode_paiement():
+    data = request.get_json()
+    mode_paiement = data['modePaiement']
+    name_paiement = mode_paiement['paiementName']
+    print(name_paiement.encode('utf-8'))
+    cnxn = get_mydb()
+    cur = cnxn.cursor()
+    cur.execute("""INSERT INTO ModePaiement (modePaiement) VALUES('{}')""".format(name_paiement.encode('utf-8')))
+    cnxn.commit()
+    return jsonify(1)
 
 
 if __name__ == '__main__':

@@ -16,10 +16,13 @@
         <a class="navbar-brand texte-white" routerLink="/profile">Bienvenue {{ auth.getUserDetails()?.identity.nom }} {{ auth.getUserDetails()?.identity.prenom }}</a>
       </li>
       <li *ngIf="auth.isLoggedIn()" class="nav-item">
-        <a class="nav-link" routerLink="/ajout-frais">Saisie fiche de frais</a>
+        <a class="nav-link" routerLink="/ajout_frais">Saisie fiche de frais</a>
       </li>
       <li *ngIf="auth.isLoggedIn()" class="nav-item">
-        <a class="nav-link" routerLink="/voir-fiche-frais">Voir fiche de frais</a>
+        <a class="nav-link" routerLink="/voir_fiche_frais">Voir fiche de frais</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn() && auth.getUserDetails()?.identity.daf == 1" class="nav-item ">
+        <a class="nav-link" routerLink="/mode_de_paiement">Ajouter/Modifier mode de paiement</a>
       </li>
     </ul>
   </div>
