@@ -26,11 +26,10 @@ currentDate = datetime.now().strftime("%Y-%m-%d")
 
 def get_mydb():
     mydb = pymysql.connect(
-        host="mysql-leandredelpivar.alwaysdata.net",
-        user="170958",
-        passwd="Lololalaoo12",
-        # database="leandredelpivar_connexion"
-        database="leandredelpivar_gsb_php"
+        host="host",
+        user="user",
+        passwd="psw",
+        database="database"
     )
     return mydb
 
